@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-self-managed
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/deepaks374/argocd-self-managed # Replace with your GitHub repo URL
+    targetRevision: main                                     # Replace "main" with the appropriate branch or tag
+    path: .                                                  # Update to the directory containing the Helm chart
+    helm:
+      releaseName: argocd-self-managed
+  destination:
+    server: https://kubernetes.default.svc                   # Kubernetes API server
+    namespace: argocd                                        # Target namespace
+  syncPolicy:
+    automated:
+      prune: true                                            # Prune resources not defined in the chart
+      selfHeal: true  
