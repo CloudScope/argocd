@@ -5,12 +5,17 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    repoURL: https://github.com/deepaks374/argocd-self-managed # Replace with your GitHub repo URL
-    targetRevision: main                                     # Replace "main" with the appropriate branch or tag
-    path: .                                                  # Update to the directory containing the Helm chart
-    helm:
-      releaseName: argocd-self-managed
+  sources:
+    - repoURL: https://github.com/CloudScope/helm-values.git # Can point to either a Helm chart repo or a git repo.
+      targetRevision: main  # For Helm, this refers to the chart version.
+      #path: values/jenkins/values.yaml # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
+      ref: values
+    - repoURL: https://cloudscope.github.io/helm/charts
+      targetRevision: 1.0.0
+      chart: argocd-self-managed
+      helm:
+        valueFiles:
+        - $values/argocd-self-managed/values.yaml
   destination:
     server: https://kubernetes.default.svc                   # Kubernetes API server
     namespace: argocd                                        # Target namespace
