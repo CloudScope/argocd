@@ -8,10 +8,9 @@ spec:
     namespace: jenkins
     server: https://kubernetes.default.svc
   sources:
-    - repoURL: https://github.com/CloudScope/helm-values.git # Can point to either a Helm chart repo or a git repo.
-      targetRevision: main  # For Helm, this refers to the chart version.
-      #path: values/jenkins/values.yaml # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
-      ref: values
+    - repoURL: https://github.com/CloudScope/helm-values.git
+      targetRevision: main
+      ref: values # ref used as $values so we can use it in the helm.valueFiles
     - repoURL: https://cloudscope.github.io/helm/charts
       targetRevision: 13.5.3
       chart: jenkins

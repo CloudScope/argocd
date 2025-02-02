@@ -13,6 +13,7 @@ spec:
       targetRevision: 1.0.0
       chart: argocd-self-managed
       helm:
+        releaseName: argo-cd
         valueFiles:
         - $values/argocd-self-managed/values.yaml
   destination:
