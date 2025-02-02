@@ -20,7 +20,7 @@ spec:
       helm:
         releaseName: grafana
         valueFiles:
-        - $values/grafana/values.yml
+        - $values/grafana/values.yaml
   project: default
   syncPolicy:
     automated:
