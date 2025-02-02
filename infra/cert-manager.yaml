@@ -18,7 +18,7 @@ spec:
       helm:
         releaseName: cert-manager
         valueFiles:
-        - $values/cert-manager/values.yml
+        - $values/cert-manager/values.yaml
   project: default
   syncPolicy:
     automated:
