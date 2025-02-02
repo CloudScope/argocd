@@ -4,10 +4,10 @@ metadata:
   name: grafana
   namespace: argocd
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io/background
 spec:
   destination:
-    namespace: monitoring
+    namespace: grafana
     server: https://kubernetes.default.svc
   sources:
     - repoURL: https://github.com/CloudScope/helm-values.git # Can point to either a Helm chart repo or a git repo.
