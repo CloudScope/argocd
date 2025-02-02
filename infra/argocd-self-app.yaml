@@ -6,9 +6,8 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: https://github.com/CloudScope/helm-values.git # Can point to either a Helm chart repo or a git repo.
-      targetRevision: main  # For Helm, this refers to the chart version.
-      #path: values/jenkins/values.yaml # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
+    - repoURL: https://github.com/CloudScope/helm-values.git
+      targetRevision: main
       ref: values
     - repoURL: https://cloudscope.github.io/helm/charts
       targetRevision: 1.0.0
@@ -17,9 +16,14 @@ spec:
         valueFiles:
         - $values/argocd-self-managed/values.yaml
   destination:
-    server: https://kubernetes.default.svc                   # Kubernetes API server
-    namespace: argocd                                        # Target namespace
+    server: https://kubernetes.default.svc
+    namespace: argocd
   syncPolicy:
     automated:
-      prune: true                                            # Prune resources not defined in the chart
-      selfHeal: true  
+      prune: true 
+      selfHeal: true
+    syncOptions:     
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - ApplyOutOfSyncOnly=true
+      
