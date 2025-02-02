@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  destination:
+    namespace: cert-manager
+    server: https://kubernetes.default.svc
+  sources:
+    - repoURL: https://github.com/CloudScope/helm-values.git # Can point to either a Helm chart repo or a git repo.
+      targetRevision: main  # For Helm, this refers to the chart version.
+      #path: values/jenkins/values.yaml # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
+      ref: values
+    - repoURL: https://cloudscope.github.io/helm/charts
+      targetRevision: 1.0.0
+      chart: cert-manager
+      helm:
+        releaseName: cert-manager
+        valueFiles:
+        - $values/cert-manager/values.yml
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
