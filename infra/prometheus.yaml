@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io/background
+spec:
+  destination:
+    namespace: prometheus
+    server: https://kubernetes.default.svc
+  sources:
+    - repoURL: https://github.com/CloudScope/helm-values.git # Can point to either a Helm chart repo or a git repo.
+      targetRevision: main  # For Helm, this refers to the chart version.
+      #path: values/jenkins/values.yaml # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
+      ref: values
+    - repoURL: https://cloudscope.github.io/helm/charts
+      targetRevision: 1.0.0
+      chart: prometheus
+      helm:
+        releaseName: prometheus
+        valueFiles:
+        - $values/prometheus/values.yaml
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
