@@ -15,7 +15,7 @@ spec:
       #path: values/jenkins/values.yaml # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
       ref: values
     - repoURL: https://cloudscope.github.io/helm/charts
-      targetRevision: 1.0.0
+      targetRevision: 1.1.0
       chart: prometheus
       helm:
         releaseName: prometheus
